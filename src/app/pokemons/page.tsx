@@ -2,6 +2,7 @@
 
 import pokemons from '@/data/pokemons.json';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export default function Pokemons() {
@@ -10,6 +11,8 @@ export default function Pokemons() {
     if (nameFilter !== '') return p.name.english.includes(nameFilter);
     else return p;
   });
+
+  const router = useRouter();
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-3">
@@ -57,9 +60,14 @@ export default function Pokemons() {
               .toString()
               .padStart(3, '0')}MS.png`;
             return (
-              <tr key={pokemon.id} className="cursor-pointer hover:bg-blue-100">
+              <tr
+                key={pokemon.id}
+                className="cursor-pointer hover:bg-blue-100"
+                onClick={() => {
+                  router.push(`/pokemons/${pokemon.id}`);
+                }}
+              >
                 <td>
-                  {/* {imageName} */}
                   <Image
                     src={imageName}
                     alt="thumbnail"
